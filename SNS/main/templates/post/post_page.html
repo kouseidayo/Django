@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+    <h1>投稿する</h1>
+</div>
+
+<form action="/msg_post" method="post">
+    {% csrf_token %}
+    <p>メッセージを入力</p>
+    <input type="textbox" name="msg_text">
+    <p>いいね数</p>
+    <input type="textbox" name="good">
+    
+    <input type="submit" id="button" name="button" value="送信">
+</form>
+{% endblock %}

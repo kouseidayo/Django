@@ -1,0 +1,42 @@
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+    <title>test_sns</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <script src="https://kit.fontawesome.com/d86c726e71.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <div>
+            <p>sns</p>
+        </div>
+        <div id="login">
+            {% if user.is_authenticated %}
+            <p><a href="my_page">{{ user.get_username }}</a></p>
+            {% else %}
+            <p><a href="accounts/login/">ログイン</a></p>
+            {% endif %}
+        </div>
+    </header>
+
+    <div id="wrapper">
+      <nav id="nav-left">
+        <div id="nav">
+          <ul id="nav-ul">
+            <li class="nav-li"><a href="{% url 'msg_list' %}" class="nav-li-a"><i class="fa fa-tachometer" style="margin-right:15px"></i>投稿一覧</a></li>
+            <li class="nav-li"><a href="{% url 'post_page' %}" class="nav-li-a"><i class="fas fa-list" style="margin-right:15px"></i>投稿する</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div id="main">
+        <div id="display">
+          {% block content %}
+          {% endblock %}
+        </div>
+     </div>
+    </div>
+</body>
+</html>

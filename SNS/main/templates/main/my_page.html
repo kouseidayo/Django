@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+    <h1>マイページ</h1>
+</div>
+
+{% for text in msg %}
+    <div id="msg">
+        <p>user: {{ text.user.username}}</p>
+        <p>{{ text.msg_text }}</p>
+        <p>good: {{ text.good }}</p>
+    </div>
+    <hr>
+{% endfor %}
+{% endblock %}

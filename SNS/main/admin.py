@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import Message#,Post,User_info
+from .models import Message,Comment
 
-##admin.site.register(Post)
-##admin.site.register(User_info)
+admin.site.register(Comment)
 admin.site.register(Message)

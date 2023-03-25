@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+    <h1>コメント</h1>
+</div>
+    <div id="msg">
+        <p>user: {{ target.user.username}}</p>
+        <p>{{ target.msg_text }}</p>
+
+    </div>
+    <hr>
+    <form action="{% url 'post_comments' pk=target.pk %}" method="post">
+        {% csrf_token %}
+	<p>メッセージを入力</p>
+        <input type="textbox" name="comment_text">
+        <input type="submit" id="button" name="button" value="送信">
+    </form>
+    <hr>
+    <h3>コメント一覧</h3>
+    {% for comments in comments_list %}
+        <p>user: {{ comments.user.username }}</p>
+        <p>{{ comments.comment_text }}</p>
+        <hr>
+    {% empty %}
+        <p>コメントがまだありません</p>
+    {% endfor %}
+{% endblock %}

@@ -7,8 +7,9 @@ from django.contrib.auth import get_user_model
 class Message(models.Model):
     msg_id = models.AutoField(primary_key=True)
     msg_text = models.TextField()
-    good = models.PositiveIntegerField()
+    #good = models.PositiveIntegerField()
     user = models.ForeignKey(get_user_model(),verbose_name="ユーザー",on_delete=models.CASCADE)
+    liked_by = models.ManyToManyField(get_user_model(), related_name='liked_posts', blank=True)
 
     def __str__(self):
         return str(self.msg_text)

@@ -25,3 +25,16 @@ class Message(models.Model):
         return str(self.msg_text)
 
     
+##class Follow(models.Model):
+##    user = models.ForeignKey(get_user_model(),on_delete=models.CASCADE, blank=True)
+##    follow_user = models.ForeignKey(get_user_model(),on_delete=models.CASCADE, blank=True)
+##    date_created = models.DateTimeField(default=timezone.now)
+##
+##    def __str__(self):
+##        return str(self.follow_user)
+
+
+
+
+
+    

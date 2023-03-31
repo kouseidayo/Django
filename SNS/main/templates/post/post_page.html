@@ -8,7 +8,9 @@
     {% csrf_token %}
     <p>メッセージを入力</p>
     <input type="textbox" name="msg_text">
-
+    <p>いいね数</p>
+    <input type="textbox" name="good">
+    
     <input type="submit" id="button" name="button" value="送信">
 </form>
 {% endblock %}

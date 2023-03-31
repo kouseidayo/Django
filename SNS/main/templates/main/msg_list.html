@@ -10,6 +10,16 @@
         <p>{{ text.msg_text }}</p>
         <p>good: {{ text.good }}</p>
     </div>
+    <form action="{% url 'post_likes' pk=text.pk %}" method="post">
+        {% csrf_token %}
+        {% if text.liked %}
+            <button type="submit" name="like" value="unlike">Unlike</button>
+        {% else %}
+            <button type="submit" name="like" value="like">Like</button>
+        {% endif %}
+	{{ text.likes }}
+    </form>
+    <a href="{% url 'comment_page' pk=text.pk %}">コメントする</a>
     <hr>
 {% endfor %}
 {% endblock %}

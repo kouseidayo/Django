@@ -4,7 +4,7 @@
     <h1>投稿する</h1>
 </div>
 
-<form action="/msg_post" method="post">
+<form action="{% url 'msg_post' %}" method="post">
     {% csrf_token %}
     <p>メッセージを入力</p>
     <input type="textbox" name="msg_text">

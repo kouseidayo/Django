@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+    <h1>フォロワー</h1>
+</div>
+{% for user in followers %}
+    <hr>
+    <div id="msg">
+        <a href="{% url 'user_page' pk=user.id %}">
+        <p>user: {{ user.username}}</p>
+	</a>
+    </div>
+{% empty %}
+        <p>フォロワーがいません</p>
+{% endfor %}
+{% endblock %}

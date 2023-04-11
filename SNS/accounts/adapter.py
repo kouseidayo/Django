@@ -5,5 +5,5 @@ class AccountAdapter(DefaultAccountAdapter):
     user = super().save_user(request, user, form, commit=False)
     user.age = form.cleaned_data.get("age")
     user.profile = form.cleaned_data.get("profile")
-    user.follow = form.cleaned_data.get("follow")
+    user.following = form.cleaned_data.get("following")
     user.save()

@@ -15,7 +15,7 @@
         </div>
         <div id="login">
             {% if user.is_authenticated %}
-            <p><a href="my_page">{{ user.get_username }}</a></p>
+            <p><a href="{% url 'my_page' %}">{{ user.get_username }}</a></p>
             {% else %}
             <p><a href="{% url 'account_login' %}">ログイン</a></p>
             {% endif %}

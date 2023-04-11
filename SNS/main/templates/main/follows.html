@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+    <h1>フォロー中</h1>
+</div>
+{% for user in follows %}
+    <hr>
+    <div id="msg">
+	<a href="{% url 'user_page' pk=user.id %}">
+        <p>user: {{ user.username}}</p>
+	</a>
+    </div>
+{% empty %}
+        <p>フォロー中のユーザーがいません</p>
+{% endfor %}
+{% endblock %}

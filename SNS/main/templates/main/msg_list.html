@@ -6,19 +6,11 @@
 
 {% for text in msg %}
     <div id="msg">
+	<a href="{% url 'user_page' pk=text.user.id %}">
         <p>user: {{ text.user.username}}</p>
+	</a>
         <p>{{ text.msg_text }}</p>
-        <p>good: {{ text.good }}</p>
     </div>
-    <form action="{% url 'follow_post' pk=text.user.id %}" method="post">
-        {% csrf_token %}
-        {% if text.followed %}
-            <button type="submit" name="follow" value="unfollow">フォロー中</button>
-        {% else %}
-            <button type="submit" name="follow" value="follow">フォローする</button>
-        {% endif %}
-    </form>
-   {{ text.followers }}
     <form action="{% url 'post_likes' pk=text.pk %}" method="post">
         {% csrf_token %}
         {% if text.liked %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+    <h1>{{user.username}}</h1>
+</div>
+<div>
+    <a href="{% url 'user_follows' pk=user.id %}">フォロー中</a>
+    <p>{{followers}}</p>
+    <a href="{% url 'user_followers' pk=user.id %}">フォロワー</a>
+    <p>{{follows}}</p>
+</div>
+    <form action="{% url 'follow_post' pk=user.id %}" method="post">
+        {% csrf_token %}
+        {% if followed %}
+            <button type="submit" name="follow" value="unfollow">フォロー中</button>
+        {% else %}
+            <button type="submit" name="follow" value="follow">フォローする</button>
+        {% endif %}
+    </form>
+
+{% for text in msg %}
+    <div id="msg">
+        <p>date: {{ text.date_created}}</p>
+        <p>{{ text.msg_text }}</p>
+        <p>good: {{ text.likes }}</p>
+    </div>
+    <hr>
+{% endfor %}
+{% endblock %}

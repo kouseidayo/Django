@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Message,Comment
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404,redirect
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
@@ -21,23 +21,31 @@ def user_create(get_id):
 
 
 #メインページ
-#@login_required                 $$$$$$$$$$$$$$未ログイン中はエラーになってしまう
 def msg_list(request):
     msg = Message.objects.all()
     for text in msg:
         text.likes = text.liked_by.count()
-        if text.liked_by.filter(id=request.user.id).exists():#いいねしていない場合
-            text.liked=True
+        if request.user.is_authenticated:
+            
+            if text.liked_by.filter(id=request.user.id).exists():#いいねしていない場合
+                text.liked=True
+            else:
+                text.liked=False
+
         else:
             text.liked=False
 
-        user = get_user_model().objects.get(id = text.user.id) #逆参照(仮)
-        text.followers = user.followers.all().count()
-        
-        if request.user.following.filter(id=text.user.id).exists():#フォローしていない場合
-            text.followed = True
-        else:
-            text.followed = False
+##        user = get_user_model().objects.get(id = text.user.id) #逆参照(仮)
+##        text.followers = user.followers.all().count()
+##
+##        if request.user.is_authenticated:
+##            if request.user.following.filter(id=text.user.id).exists():#フォローしていない場合
+##                text.followed = True
+##            else:
+##                text.followed = False
+##
+##        else:
+##            text.followed = False
 
     
     return render(request, 'main/msg_list.html', {'msg': msg})
@@ -67,8 +75,12 @@ def my_page(request):
     msg = Message.objects.filter(user=request.user)
     for text in msg:
         text.likes = text.liked_by.count()
+
+    user= get_object_or_404(get_user_model(), id=request.user.id)
+    followers=user.followers.all().count()
+    follows=user.following.all().count()
         
-    return render(request, 'main/my_page.html', {'msg':msg})
+    return render(request, 'main/my_page.html', {'msg':msg,'followers':followers,'follows':follows})
 
 
 
@@ -125,7 +137,52 @@ def follow_post(request,pk): #pkの内容はフォローするターゲットの
                 post.following.remove(user_create(pk))
             else:
                 post.following.add(user_create(pk))
-    return redirect('msg_list')
+    return redirect('user_page',pk=pk)
 
 
+#ユーザーページ
+#@login_required  
+def user_page(request,pk):
+    user= get_object_or_404(get_user_model(), pk=pk)
+    msg = Message.objects.filter(user=user)
+    for text in msg:
+        text.likes = text.liked_by.count()
+
+
+    if request.user.is_authenticated:
+            if request.user.following.filter(id=pk).exists():#フォローしていない場合
+                followed = True
+            else:
+                followed = False
+    else:
+        followed = False
+
+    #user = get_user_model().objects.get(id = text.user.id) #逆参照(仮)
+    followers=user.followers.all().count()
+    follows=user.following.all().count()
     
+    return render(request, 'main/user_page.html', {'followed':followed,'follows':follows,'followers':followers,'user':user,'msg':msg})
+
+@login_required  
+def follows(request):
+    user= get_object_or_404(get_user_model(), id=request.user.id)
+    follows=user.following.all()
+    return render(request, 'main/follows.html', {'follows':follows})
+
+@login_required  
+def followers(request):
+    user= get_object_or_404(get_user_model(), id=request.user.id)
+    followers=user.followers.all()
+    return render(request, 'main/followers.html', {'followers':followers})
+
+@login_required  
+def user_follows(request,pk):
+    user= get_object_or_404(get_user_model(), pk=pk)
+    follows=user.following.all()
+    return render(request, 'main/follows.html', {'follows':follows})
+
+@login_required  
+def user_followers(request,pk):
+    user= get_object_or_404(get_user_model(), pk=pk)
+    followers=user.followers.all()
+    return render(request, 'main/followers.html', {'followers':followers})

@@ -3,10 +3,15 @@
 <div>
     <h1>マイページ</h1>
 </div>
-
+<div id="setting">
+    <a href="{% url 'follows' %}">フォロー中</a>
+    <p>{{ follows }}</p>
+    <a href="{% url 'followers' %}">フォロワー</a>
+    <p>{{ followers }}</p>
+</div>
 {% for text in msg %}
     <div id="msg">
-        <p>user: {{ text.user.username}}</p>
+        <p>date: {{ text.date_created}}</p>
         <p>{{ text.msg_text }}</p>
         <p>good: {{ text.likes }}</p>
     </div>

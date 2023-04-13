@@ -161,7 +161,7 @@ def user_page(request,pk):
     followers=user.followers.all().count()
     follows=user.following.all().count()
     
-    return render(request, 'main/user_page.html', {'followed':followed,'follows':follows,'followers':followers,'user':user,'msg':msg})
+    return render(request, 'main/user_page.html', {'followed':followed,'follows':follows,'followers':followers,'users':user,'msg':msg})
 
 @login_required  
 def follows(request):

@@ -83,13 +83,67 @@ header p{
     padding-left: 250px;
 }
 
-#main{
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
 
 #login{
     position: absolute;
     right: 10;
+}
+
+
+#main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 7;
+  
+}
+
+
+body {
+  background-image: url('../../../media/img1.png'); 
+  background-size: cover;
+  animation: bgfade 60s infinite; 
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 7;
+  background-attachment: fixed;
+  background-position: center center;
+
+
+}
+
+@keyframes bgfade {
+  0% {
+    background-image: url('../../../media/img1.png');
+  }
+  33% {
+    background-image: url('../../../media/img2.png');
+  }
+  66% {
+    background-image: url('../../../media/img3.png');
+  }
+  100% {
+    background-image: url('../../../media/img1.png');
+  }
+}
+
+
+#msg{
+position: relative;
+background-color: white;
+  width: 100%;
+  height: 100%;
+  z-index: 8;
+}
+
+ 
+
+@keyframes parallax {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -50%, 0);
+  }
 }

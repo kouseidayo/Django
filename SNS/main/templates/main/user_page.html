@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
 <div>
-    <h1>{{user.username}}</h1>
+    <h1>{{users.username}}</h1>
 </div>
 <div>
-    <a href="{% url 'user_follows' pk=user.id %}">フォロー中</a>
-    <p>{{followers}}</p>
-    <a href="{% url 'user_followers' pk=user.id %}">フォロワー</a>
+    <a href="{% url 'user_follows' pk=users.id %}">フォロー中</a>
     <p>{{follows}}</p>
+    <a href="{% url 'user_followers' pk=users.id %}">フォロワー</a>
+    <p>{{followers}}</p>
 </div>
-    <form action="{% url 'follow_post' pk=user.id %}" method="post">
+    <form action="{% url 'follow_post' pk=users.id %}" method="post">
         {% csrf_token %}
         {% if followed %}
             <button type="submit" name="follow" value="unfollow">フォロー中</button>

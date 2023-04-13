@@ -3,11 +3,11 @@
 <div>
     <h1>フォロワー</h1>
 </div>
-{% for user in followers %}
+{% for users in followers %}
     <hr>
     <div id="msg">
-        <a href="{% url 'user_page' pk=user.id %}">
-        <p>user: {{ user.username}}</p>
+        <a href="{% url 'user_page' pk=users.id %}">
+        <p>user: {{ users.username}}</p>
 	</a>
     </div>
 {% empty %}

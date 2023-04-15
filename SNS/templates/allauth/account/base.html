@@ -4,10 +4,60 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block head_title %}{% endblock %}</title>
+    <style>
+
+     	a {
+  	font-weight: bold;
+  	text-decoration: none;
+  	color: #40f505;
+	}
+
+	button{
+	position: relative;
+	color: #40f505;
+	display: flex;
+  	justify-content: center; /* 水平方向に中央寄せ */
+  	align-items: center; /* 垂直方向に中央寄せ */
+	background-color: white;
+  	width: 200px;
+  	height: 50px;
+  	border-radius: 100vh;
+ 	border: solid 3px #40f505;
+  	font-weight: bold;
+	}
+
+    </style>
+
     {% block extra_head %}
     {% endblock %}
   </head>
   <body>
+
+      <h1>SNS</h1>
+
+      <div style="text-align: center;">
+          <img src="../../../media/イッヌ.png" id="image" width="50%" height="50%" style="text-align: center;">
+	</div>
+
+
+<script>
+const randomIndex = Math.floor(Math.random() * 3);
+
+let imageSrc;
+
+if (randomIndex === 0) {
+  imageSrc = "../../../media/イッヌ.png";
+} else if (randomIndex === 1) {
+  imageSrc = "../../../media/魚.png";
+} else {
+  imageSrc = "../../../media/鳥.png";
+}
+
+const image = document.getElementById("image");
+image.src = imageSrc;
+</script>
+
+
     {% block body %}
 
     {% if messages %}
@@ -25,11 +75,11 @@
       <strong>Menu:</strong>
       <ul>
         {% if user.is_authenticated %}
-        <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
-        <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
+        <li><a href="{% url 'account_email' %}" >メールアドレス変更</a></li>
+        <li><a href="{% url 'account_logout' %}">サインアウト</a></li>
         {% else %}
-        <li><a href="{% url 'account_login' %}">Sign In</a></li>
-        <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+        <li><a href="{% url 'account_login' %}">ログイン</a></li>
+        <li><a href="{% url 'account_signup' %}">新規登録</a></li>
         {% endif %}
       </ul>
     </div>

@@ -4,11 +4,20 @@
     <h1>投稿する</h1>
 </div>
 
+<br>
+<div id="msg">
+<div id="msg_locate">
 <form action="{% url 'msg_post' %}" method="post">
     {% csrf_token %}
+    <br>
     <p>メッセージを入力</p>
-    <input type="textbox" name="msg_text">
+    <textarea type="textbox" name="msg_text" id="posttextbox" rows="5" cols="50"></textarea>
+<br><br>
 
-    <input type="submit" id="button" name="button" value="送信">
+    <input type="submit" id="post_button" name="button" value="送信">
+
 </form>
+<br>
+</div>
+</div>
 {% endblock %}

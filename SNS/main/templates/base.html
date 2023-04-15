@@ -4,14 +4,18 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
-    <title>test_sns</title>
+    <title>kosei's sns</title>
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <script src="https://kit.fontawesome.com/d86c726e71.js" crossorigin="anonymous"></script>
     <script src="{% static 'js/base.js' %}"></script>
 </head>
 <body>
     <header>
-        <div>
+	<div id="menu">
+	<button class="fas fa-list" onclick="handleButtonClick()"></button>
+	</div>
+
+        <div id="top_title">
             <p>sns</p>
         </div>
         <div id="login">
@@ -27,8 +31,10 @@
       <nav id="nav-left">
         <div id="nav">
           <ul id="nav-ul">
-            <li class="nav-li"><a href="{% url 'msg_list' %}" class="nav-li-a"><i class="fa fa-tachometer" style="margin-right:15px"></i>投稿一覧</a></li>
-            <li class="nav-li"><a href="{% url 'post_page' %}" class="nav-li-a"><i class="fas fa-list" style="margin-right:15px"></i>投稿する</a></li>
+            <li class="nav-li"><a href="{% url 'msg_list' %}" class="nav-li-a"><i  class="far fa-comment-alt" style="margin-right:15px"></i>投稿一覧</a></li>
+            <li class="nav-li"><a href="{% url 'post_page' %}" class="nav-li-a"><i  class="far fa-edit" style="margin-right:15px"></i>投稿する</a></li>
+	    <li class="nav-li" id="out_select"><a href="{% url 'account_logout' %}" class="nav-li-a"><i  class="fa fa-sign-out" style="margin-right:15px"></i>ログアウト</a></li>
+            
           </ul>
         </div>
       </nav>

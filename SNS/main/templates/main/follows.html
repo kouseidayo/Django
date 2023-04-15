@@ -4,13 +4,19 @@
     <h1>フォロー中</h1>
 </div>
 {% for users in follows %}
-    <hr>
+    <br>
     <div id="msg">
+	<div id="msg_locate">
 	<a href="{% url 'user_page' pk=users.id %}">
         <p>user: {{ users.username}}</p>
 	</a>
     </div>
+</div>
 {% empty %}
+　　<div id="msg">
+	<div id="msg_locate">
         <p>フォロー中のユーザーがいません</p>
+	</div>
+    </div>
 {% endfor %}
 {% endblock %}

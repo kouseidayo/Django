@@ -1,29 +1,69 @@
 {% extends "base.html" %}
 {% block content %}
+<br>
 <div>
     <h1>{{users.username}}</h1>
 </div>
-<div>
+<br>
+
+<div id="actions">
+    <div id="msg">
+	<div id="follower_locate">
     <a href="{% url 'user_follows' pk=users.id %}">フォロー中</a>
     <p>{{follows}}</p>
+</div>
+</div>
+<div id="msg">
+	<div id="follower_locate">
     <a href="{% url 'user_followers' pk=users.id %}">フォロワー</a>
     <p>{{followers}}</p>
 </div>
+</div>
+</div>
+<br>
+<div class="form_center">
     <form action="{% url 'follow_post' pk=users.id %}" method="post">
         {% csrf_token %}
         {% if followed %}
-            <button type="submit" name="follow" value="unfollow">フォロー中</button>
+            <button type="submit" name="follow" value="unfollow" class="unfollow">フォロー中</button>
         {% else %}
-            <button type="submit" name="follow" value="follow">フォローする</button>
+            <button type="submit" name="follow" value="follow" class="follow">フォローする</button>
         {% endif %}
     </form>
+</div>
 
 {% for text in msg %}
+<br>
     <div id="msg">
-        <p>date: {{ text.date_created}}</p>
+	<div id="msg_locate">
+	<a href="{% url 'user_page' pk=text.user.id %}">
+        <p>{{ text.user.username}}</p>
+	</a>
         <p>{{ text.msg_text }}</p>
-        <p>good: {{ text.likes }}</p>
+    <div id="actions">
+    <form action="{% url 'post_likes' pk=text.pk %}" method="post">
+        {% csrf_token %}
+        {% if text.liked %}
+            <button class="heart" type="submit" name="unlike"></button>
+        {% else %}
+            <button class="heart_clear" type="submit" name="ike" value="like"></button>
+        {% endif %}
+	{{ text.likes }}
+    </form>
+    <div class="comments_group">
+    <a href="{% url 'comment_page' pk=text.pk %}" class="balloon"></a>
+    {{ text.comments }}
     </div>
-    <hr>
+    </div>
+    </div>
+    </div>
+{% empty %}
+<br>
+    <div id="msg">
+	<div id="msg_locate">
+        <p>投稿はありません</p>
+    </div>
+	</div>
 {% endfor %}
+
 {% endblock %}

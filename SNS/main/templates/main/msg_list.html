@@ -1,26 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
+
 <div>
     <h1>投稿一覧</h1>
 </div>
 
+
 {% for text in msg %}
 <br>
     <div id="msg">
+	<div id="msg_locate">
 	<a href="{% url 'user_page' pk=text.user.id %}">
-        <p>user: {{ text.user.username}}</p>
+        <p>{{ text.user.username}}</p>
 	</a>
         <p>{{ text.msg_text }}</p>
+    <div id="actions">
     <form action="{% url 'post_likes' pk=text.pk %}" method="post">
         {% csrf_token %}
         {% if text.liked %}
-            <button type="submit" name="like" value="unlike">Unlike</button>
+            <button class="heart" type="submit" name="unlike"></button>
         {% else %}
-            <button type="submit" name="like" value="like">Like</button>
+            <button class="heart_clear" type="submit" name="ike" value="like"></button>
         {% endif %}
 	{{ text.likes }}
     </form>
-    <a href="{% url 'comment_page' pk=text.pk %}">コメントする</a>
+    <div class="comment_group">
+    <a href="{% url 'comment_page' pk=text.pk %}" class="balloon"></a>
+    {{ text.comments }}
+    </div>
+    </div>
+    </div>
     </div>
 {% endfor %}
 {% endblock %}

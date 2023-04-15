@@ -4,13 +4,19 @@
     <h1>フォロワー</h1>
 </div>
 {% for users in followers %}
-    <hr>
+    <br>
     <div id="msg">
+	<div id="msg_locate">
         <a href="{% url 'user_page' pk=users.id %}">
-        <p>user: {{ users.username}}</p>
+        <p>{{ users.username}}</p>
 	</a>
+        </div>
     </div>
 {% empty %}
+　　<div id="msg">
+	<div id="msg_locate">
         <p>フォロワーがいません</p>
+	</div>
+    </div>
 {% endfor %}
 {% endblock %}

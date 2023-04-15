@@ -3,25 +3,44 @@
 <div>
     <h1>コメント</h1>
 </div>
+<br>
     <div id="msg">
-        <p>user: {{ target.user.username}}</p>
+	<div id="msg_locate">
+        <p>{{ target.user.username}}</p>
         <p>{{ target.msg_text }}</p>
 
     </div>
-    <hr>
+    </div>
+    <br>
+<div id="msg">
+	<div id="msg_locate">
     <form action="{% url 'post_comments' pk=target.pk %}" method="post">
         {% csrf_token %}
 	<p>メッセージを入力</p>
         <input type="textbox" name="comment_text">
         <input type="submit" id="button" name="button" value="送信">
     </form>
-    <hr>
+	</div>
+	</div>
+    <br>
+	<hr>
+<br>
     <h3>コメント一覧</h3>
+<br>
     {% for comments in comments_list %}
+	<div id="msg">
+	<div id="msg_locate">
+
         <p>user: {{ comments.user.username }}</p>
         <p>{{ comments.comment_text }}</p>
-        <hr>
+	</div>
+	</div>
+        <br>
     {% empty %}
+	<div id="msg">
+	<div id="msg_locate">
         <p>コメントがまだありません</p>
+	</div>
+	</div>
     {% endfor %}
 {% endblock %}

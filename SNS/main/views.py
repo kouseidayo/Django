@@ -1,9 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404,redirect
 from .models import Message,Comment
-#from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404,redirect
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 
 ###@login_requiredの内容
@@ -25,6 +24,7 @@ def msg_list(request):
     msg = Message.objects.all()
     for text in msg:
         text.likes = text.liked_by.count()
+        text.comments = text.commented_by.count()
         if request.user.is_authenticated:
             
             if text.liked_by.filter(id=request.user.id).exists():#いいねしていない場合
@@ -34,6 +34,10 @@ def msg_list(request):
 
         else:
             text.liked=False
+        
+    paginator = Paginator(msg, 50)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
 ##        user = get_user_model().objects.get(id = text.user.id) #逆参照(仮)
 ##        text.followers = user.followers.all().count()
@@ -48,7 +52,7 @@ def msg_list(request):
 ##            text.followed = False
 
     
-    return render(request, 'main/msg_list.html', {'msg': msg})
+    return render(request, 'main/msg_list.html', {'msg': page_obj})
 
 
 
@@ -75,6 +79,16 @@ def my_page(request):
     msg = Message.objects.filter(user=request.user)
     for text in msg:
         text.likes = text.liked_by.count()
+        text.comments = text.commented_by.count()
+        if request.user.is_authenticated:
+            
+            if text.liked_by.filter(id=request.user.id).exists():#いいねしていない場合
+                text.liked=True
+            else:
+                text.liked=False
+
+        else:
+            text.liked=False
 
     user= get_object_or_404(get_user_model(), id=request.user.id)
     followers=user.followers.all().count()
@@ -92,7 +106,7 @@ def get_likes(request,pk):
     if post.liked_by.filter(id=request.user.id).exists():
         liked = True
     if request.method == 'POST':
-        if 'like' in request.POST:
+        if 'like' or 'unlike'in request.POST:
             if liked:
                 post.liked_by.remove(request.user)
             else:
@@ -147,6 +161,16 @@ def user_page(request,pk):
     msg = Message.objects.filter(user=user)
     for text in msg:
         text.likes = text.liked_by.count()
+        text.comments = text.commented_by.count()
+        if request.user.is_authenticated:
+            
+            if text.liked_by.filter(pk=pk).exists():#いいねしていない場合
+                text.liked=True
+            else:
+                text.liked=False
+
+        else:
+            text.liked=False
 
 
     if request.user.is_authenticated:
@@ -186,3 +210,12 @@ def user_followers(request,pk):
     user= get_object_or_404(get_user_model(), pk=pk)
     followers=user.followers.all()
     return render(request, 'main/followers.html', {'followers':followers})
+
+@login_required  
+def msg_delete(request,pk): #pkの内容はフォローするターゲットのユーザーID
+    msg = Message.objects.get(pk=pk)
+    if msg.user.id==request.user.id:
+        msg.delete()
+        return redirect('my_page')
+    else:
+        return HttpResponseForbidden()

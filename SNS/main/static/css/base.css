@@ -8,6 +8,18 @@ html *{
   font-size: 17px;
   line-height: 1em;
 }
+#menu{
+    display: none;
+    margin-top: 13px;
+}
+
+#menu button {
+  font-size: 27px;
+  background-color: transparent;
+  border-color: transparent;
+  
+}
+
 p{
   letter-spacing: 0.05em;
   margin-top: 0.5em;
@@ -48,6 +60,12 @@ header p{
      position: fixed;
      z-index:9;
 }
+
+.hidden{
+    display: none;
+}
+
+
 #nav{
     position: relative;
     top: 0px;
@@ -63,6 +81,7 @@ header p{
     list-style:none;
     margin:0;
     padding:0;
+    height: 100%;
 }
 .nav-li{
     height: 40px;
@@ -77,10 +96,17 @@ header p{
     font-size: 15px;
     color:white;
 }
+
+#out_select{
+  position: absolute;
+  bottom: 10%;
+}
 #display{
     position: absolute;
     top: 70px;
     padding-left: 250px;
+    margin:0;
+    width: 100%;
 }
 
 
@@ -100,9 +126,9 @@ header p{
 
 
 body {
-  background-image: url('../../../media/img1.png'); 
+  background-image: url('../../../media/昼.png'); 
   background-size: cover;
-  animation: bgfade 60s infinite; 
+  animation: bgfade 90s infinite; 
   position: relative;
   width: 100%;
   height: 100%;
@@ -115,16 +141,25 @@ body {
 
 @keyframes bgfade {
   0% {
-    background-image: url('../../../media/img1.png');
+    background-image: url('../../../media/昼.png');
   }
-  33% {
-    background-image: url('../../../media/img2.png');
+  30% {
+    background-image: url('../../../media/昼.png');
   }
-  66% {
-    background-image: url('../../../media/img3.png');
+  40% {
+    background-image: url('../../../media/夕方.png');
+  }
+  50% {
+    background-image: url('../../../media/夜.png');
+  }
+  80% {
+    background-image: url('../../../media/夜.png');
+  }
+  90% {
+    background-image: url('../../../media/夕方.png');
   }
   100% {
-    background-image: url('../../../media/img1.png');
+    background-image: url('../../../media/昼.png');
   }
 }
 
@@ -132,18 +167,198 @@ body {
 #msg{
 position: relative;
 background-color: white;
-  width: 100%;
+  width: 90%;
   height: 100%;
   z-index: 8;
+  border-radius: 100vh;
+  border: solid 1px #dcdcdc;
 }
 
- 
-
-@keyframes parallax {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(0, -50%, 0);
-  }
+#msg_locate{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  position: relative;
+    left: 50px;
 }
+
+
+.heart {
+  top:-13px;
+  width: 20px;  /* 正方形を作る */
+  height: 20px; /* 正方形を作る */
+  position: relative;/* 基準位置とする */
+  background-color: transparent;
+  border-color: transparent;
+}
+.heart::before,
+.heart::after {
+  content: "";  /* 疑似要素に必須 */
+  width: 50%;   /* ハートの丸い部分の大きさにかかわる */
+  height: 80%;  /* ハートの高さにかかわる */
+  background: #40f505; /* ハートの色 */
+  border-radius: 25px 25px 0 0; /* ハートの半円を生成 */
+  display: block; /* ブロック要素にする */
+  position: absolute; /* 相対位置に指定 */
+}
+.heart::before {
+  transform: rotate(-45deg); /* 左に回転 */
+  left: 14%;    /* 左からの位置を指定 */
+
+}
+.heart::after {
+  transform: rotate(45deg);  /* 右に回転 */
+  right: 14%;                /* 右からの位置を指定 */
+}
+
+
+.heart_clear {
+  top:-13px;
+  width: 20px;  /* 正方形を作る */
+  height: 20px; /* 正方形を作る */
+  position: relative;/* 基準位置とする */
+  background-color: transparent;
+  border-color: transparent;
+}
+.heart_clear::before,
+.heart_clear::after {
+  content: "";  /* 疑似要素に必須 */
+  width: 50%;   /* ハートの丸い部分の大きさにかかわる */
+  height: 80%;  /* ハートの高さにかかわる */
+  background: #c5cbc3; /* ハートの色 */
+  border-radius: 25px 25px 0 0; /* ハートの半円を生成 */
+  display: block; /* ブロック要素にする */
+  position: absolute; /* 相対位置に指定 */
+}
+.heart_clear::before {
+  transform: rotate(-45deg); /* 左に回転 */
+  left: 14%;    /* 左からの位置を指定 */
+
+}
+.heart_clear::after {
+  transform: rotate(45deg);  /* 右に回転 */
+  right: 14%;                /* 右からの位置を指定 */
+}
+
+.balloon{
+  display: inline-block;
+  vertical-align: middle;
+  color: #c5cbc3;
+  line-height: 1;
+  position: relative;
+  width: 0.6em;
+  height: 0.5em;
+  background: #fff;
+  border: 0.15em solid currentColor;
+  border-radius: 0.2em;
+  box-sizing: content-box;
+  top: -2px;
+}
+
+.balloon::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 10%;
+  width: 0.16em;
+  height: 0.16em;
+  background: inherit;
+  border: 0.15em solid currentColor;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-right-width: 0.14142em;
+  border-bottom-width: 0.14142em;
+  box-sizing: content-box;
+  border-radius: 0 0 1 0.1em;
+  transform: skewY(-45deg);
+  transform-origin: left top;
+}
+
+#actions{
+display: flex;
+gap: 15px;
+}
+
+a {
+  font-weight: bold;
+  text-decoration: none;
+  color: #40f505;
+}
+
+#post_button{
+position: relative;
+color: #40f505;
+display: flex;
+  justify-content: center; /* 水平方向に中央寄せ */
+  align-items: center; /* 垂直方向に中央寄せ */
+background-color: white;
+  width: 200px;
+  height: 50px;
+  border-radius: 100vh;
+  border: solid 3px #40f505;
+  font-weight: bold;
+  left: 90px;
+}
+
+.follow{
+position: relative;
+color: #40f505;
+display: flex;
+  justify-content: center; /* 水平方向に中央寄せ */
+  align-items: center; /* 垂直方向に中央寄せ */
+background-color: white;
+  width: 200px;
+  height: 50px;
+  border-radius: 100vh;
+  border: solid 3px #40f505;
+  font-weight: bold;
+}
+
+.unfollow{
+position: relative;
+color: white;
+background-color: #40f505;
+  width: 200px;
+  height: 50px;
+  border-radius: 100vh;
+  border: solid 3px white;
+  font-weight: bold;
+}
+
+#follower_locate{
+  width: 100%;
+  height: 100%;
+  margin-top: 10px;
+  position: relative;
+text-align: center;
+}
+
+.form_center{
+display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 600px) {
+  #nav-left{
+    display: none;
+}
+
+  #display{
+    padding-left: 10px;
+}
+  #menu{
+    display:block;
+}
+  #top_title{
+    position: absolute;
+  left: 43%;
+}
+
+}
+
+#posttextbox {
+        width: 80%;
+	height: 100px;
+      }
+

@@ -15,4 +15,5 @@ urlpatterns = [
     path('followers/',views.followers,name='followers'),
     path('user_follows/<int:pk>/',views.user_follows,name='user_follows'),
     path('user_followers/<int:pk>/',views.user_followers,name='user_followers'),
+    path('msg_delete/<int:pk>/',views.msg_delete,name='msg_delete'),
 ]

@@ -17,7 +17,7 @@ html *{
   font-size: 27px;
   background-color: transparent;
   border-color: transparent;
-  
+
 }
 
 p{
@@ -46,7 +46,7 @@ header p{
     position:relative;
     height:100vh;
     padding-bottom:0px;
-    
+
 }
 #nav-left{
      top: 50px;
@@ -121,14 +121,14 @@ header p{
   width: 100%;
   height: 100%;
   z-index: 7;
-  
+
 }
 
 
 body {
-  background-image: url('../../../media/昼.png'); 
+  background-image: url('../../../media/昼.png');
   background-size: cover;
-  animation: bgfade 90s infinite; 
+  animation: bgfade 90s infinite;
   position: relative;
   width: 100%;
   height: 100%;
@@ -167,7 +167,7 @@ body {
 #msg{
 position: relative;
 background-color: white;
-  width: 90%;
+  width: 100%;
   height: 100%;
   z-index: 8;
   border-radius: 100vh;
@@ -175,11 +175,11 @@ background-color: white;
 }
 
 #msg_locate{
-  width: 100%;
+  width: 75%;
   height: 100%;
   margin: 0;
   position: relative;
-    left: 50px;
+    left: 55px;
 }
 
 
@@ -196,7 +196,7 @@ background-color: white;
   content: "";  /* 疑似要素に必須 */
   width: 50%;   /* ハートの丸い部分の大きさにかかわる */
   height: 80%;  /* ハートの高さにかかわる */
-  background: #40f505; /* ハートの色 */
+  background: #9acd32; /* ハートの色 */
   border-radius: 25px 25px 0 0; /* ハートの半円を生成 */
   display: block; /* ブロック要素にする */
   position: absolute; /* 相対位置に指定 */
@@ -282,27 +282,27 @@ gap: 15px;
 a {
   font-weight: bold;
   text-decoration: none;
-  color: #40f505;
+  color: #9acd32;
 }
 
 #post_button{
 position: relative;
-color: #40f505;
+color: #9acd32;
 display: flex;
-  justify-content: center; /* 水平方向に中央寄せ */
+  justify-content: center; /* 水平方向に中央寄せ    #40f505*/
   align-items: center; /* 垂直方向に中央寄せ */
 background-color: white;
   width: 200px;
   height: 50px;
   border-radius: 100vh;
-  border: solid 3px #40f505;
+  border: solid 3px #9acd32;
   font-weight: bold;
-  left: 90px;
+  left: 0%;
 }
 
 .follow{
 position: relative;
-color: #40f505;
+color: #9acd32;
 display: flex;
   justify-content: center; /* 水平方向に中央寄せ */
   align-items: center; /* 垂直方向に中央寄せ */
@@ -310,14 +310,14 @@ background-color: white;
   width: 200px;
   height: 50px;
   border-radius: 100vh;
-  border: solid 3px #40f505;
+  border: solid 3px #9acd32;
   font-weight: bold;
 }
 
 .unfollow{
 position: relative;
 color: white;
-background-color: #40f505;
+background-color: #9acd32;
   width: 200px;
   height: 50px;
   border-radius: 100vh;
@@ -361,4 +361,3 @@ display: flex;
         width: 80%;
 	height: 100px;
       }
-

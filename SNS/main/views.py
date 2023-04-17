@@ -3,6 +3,7 @@ from .models import Message,Comment
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.http import HttpResponseForbidden
 
 
 ###@login_requiredの内容
@@ -21,12 +22,12 @@ def user_create(get_id):
 
 #メインページ
 def msg_list(request):
-    msg = Message.objects.all()
+    msg = Message.objects.all().order_by('-date_created')
     for text in msg:
         text.likes = text.liked_by.count()
         text.comments = text.commented_by.count()
         if request.user.is_authenticated:
-            
+
             if text.liked_by.filter(id=request.user.id).exists():#いいねしていない場合
                 text.liked=True
             else:
@@ -34,37 +35,24 @@ def msg_list(request):
 
         else:
             text.liked=False
-        
+
     paginator = Paginator(msg, 50)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-##        user = get_user_model().objects.get(id = text.user.id) #逆参照(仮)
-##        text.followers = user.followers.all().count()
-##
-##        if request.user.is_authenticated:
-##            if request.user.following.filter(id=text.user.id).exists():#フォローしていない場合
-##                text.followed = True
-##            else:
-##                text.followed = False
-##
-##        else:
-##            text.followed = False
-
-    
     return render(request, 'main/msg_list.html', {'msg': page_obj})
 
 
 
 #投稿ページを表示
-@login_required  
+@login_required
 def post_page(request):
         return render(request,'post/post_page.html')
 
 
 
 #投稿内容を送信
-@login_required  
+@login_required
 def msg_post(request):
     Message.objects.create(msg_text=request.POST.get("msg_text"),
                              user = user_create(request.user.id)
@@ -74,14 +62,14 @@ def msg_post(request):
 
 
 #マイページを表示
-@login_required  
+@login_required
 def my_page(request):
-    msg = Message.objects.filter(user=request.user)
+    msg = Message.objects.filter(user=request.user).order_by('-date_created')
     for text in msg:
         text.likes = text.liked_by.count()
         text.comments = text.commented_by.count()
         if request.user.is_authenticated:
-            
+
             if text.liked_by.filter(id=request.user.id).exists():#いいねしていない場合
                 text.liked=True
             else:
@@ -93,13 +81,13 @@ def my_page(request):
     user= get_object_or_404(get_user_model(), id=request.user.id)
     followers=user.followers.all().count()
     follows=user.following.all().count()
-        
+
     return render(request, 'main/my_page.html', {'msg':msg,'followers':followers,'follows':follows})
 
 
 
 #goodを管理
-@login_required  
+@login_required
 def get_likes(request,pk):
     post = get_object_or_404(Message, pk=pk)
     liked = False
@@ -126,7 +114,7 @@ def comment_page(request,pk):
 
 
 #コメントを送信
-@login_required  
+@login_required
 def get_comments(request,pk):
     comment = Comment.objects.create(comment_text=request.POST.get("comment_text"),
                                      user = user_create(request.user.id)
@@ -139,7 +127,7 @@ def get_comments(request,pk):
 
 
 #フォロー機能
-@login_required  
+@login_required
 def follow_post(request,pk): #pkの内容はフォローするターゲットのユーザーID
     post = get_object_or_404(get_user_model(), pk=request.user.id)
     followed = False
@@ -155,16 +143,16 @@ def follow_post(request,pk): #pkの内容はフォローするターゲットの
 
 
 #ユーザーページ
-#@login_required  
+#@login_required
 def user_page(request,pk):
     user= get_object_or_404(get_user_model(), pk=pk)
-    msg = Message.objects.filter(user=user)
+    msg = Message.objects.filter(user=user).order_by('-date_created')
     for text in msg:
         text.likes = text.liked_by.count()
         text.comments = text.commented_by.count()
         if request.user.is_authenticated:
-            
-            if text.liked_by.filter(pk=pk).exists():#いいねしていない場合
+
+            if text.liked_by.filter(id=request.user.id).exists():#いいねしていない場合
                 text.liked=True
             else:
                 text.liked=False
@@ -174,45 +162,49 @@ def user_page(request,pk):
 
 
     if request.user.is_authenticated:
-            if request.user.following.filter(id=pk).exists():#フォローしていない場合
+            if request.user.following.filter(pk=pk).exists():#フォローしていない場合
                 followed = True
             else:
                 followed = False
     else:
         followed = False
 
-    #user = get_user_model().objects.get(id = text.user.id) #逆参照(仮)
     followers=user.followers.all().count()
     follows=user.following.all().count()
-    
+
     return render(request, 'main/user_page.html', {'followed':followed,'follows':follows,'followers':followers,'users':user,'msg':msg})
 
-@login_required  
+#マイページのフォロー中のユーザー
+@login_required
 def follows(request):
     user= get_object_or_404(get_user_model(), id=request.user.id)
     follows=user.following.all()
     return render(request, 'main/follows.html', {'follows':follows})
 
-@login_required  
+#マイページのフォローされているユーザー
+@login_required
 def followers(request):
     user= get_object_or_404(get_user_model(), id=request.user.id)
     followers=user.followers.all()
     return render(request, 'main/followers.html', {'followers':followers})
 
-@login_required  
+#ユーザーページのフォロー中のユーザー
+@login_required
 def user_follows(request,pk):
     user= get_object_or_404(get_user_model(), pk=pk)
     follows=user.following.all()
     return render(request, 'main/follows.html', {'follows':follows})
 
-@login_required  
+#ユーザーページのフォローされているユーザー
+@login_required
 def user_followers(request,pk):
     user= get_object_or_404(get_user_model(), pk=pk)
     followers=user.followers.all()
     return render(request, 'main/followers.html', {'followers':followers})
 
-@login_required  
-def msg_delete(request,pk): #pkの内容はフォローするターゲットのユーザーID
+#マイページのメッセージの削除
+@login_required
+def msg_delete(request,pk): 
     msg = Message.objects.get(pk=pk)
     if msg.user.id==request.user.id:
         msg.delete()

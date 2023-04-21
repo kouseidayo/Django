@@ -7,7 +7,7 @@
 <br>
 <div id="msg">
 <div id="msg_locate">
-<form action="{% url 'msg_post' %}" method="post">
+<form action="{% url 'msg_post' %}" method="post" onsubmit="postButtonDisable()">
     {% csrf_token %}
     <br>
     <p>メッセージを入力</p>

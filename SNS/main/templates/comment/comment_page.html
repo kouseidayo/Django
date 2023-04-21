@@ -14,11 +14,11 @@
     <br>
 <div id="msg">
 	<div id="msg_locate">
-    <form action="{% url 'post_comments' pk=target.pk %}" method="post">
+    <form action="{% url 'post_comments' pk=target.pk %}" method="post" onsubmit="commentButtonDisable()">
         {% csrf_token %}
 	<p>メッセージを入力</p>
         <input type="textbox" name="comment_text">
-        <input type="submit" id="button" name="button" value="送信">
+        <input type="submit" id="comment_button" name="button" value="送信">
     </form>
 	</div>
 	</div>

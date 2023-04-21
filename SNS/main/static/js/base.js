@@ -14,3 +14,11 @@ nav.style.display = 'flex';
 }
 }
 
+function commentButtonDisable(){
+document.getElementById("comment_button").disabled = true;
+}
+
+
+function postButtonDisable(){
+document.getElementById("post_button").disabled = true;
+}
